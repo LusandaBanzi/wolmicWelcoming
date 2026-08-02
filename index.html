@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backdrop</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    position:relative;
+    color:#fff;
+    background:linear-gradient(
+-45deg,
+#2c1708,
+#4b2b14,
+#6f421d,
+#a96b37,
+#d39a5d,
+#8a552b,
+#3a1e0d,
+#1c0d05
+);
+    background-size:400% 400%;
+    animation:gradientShift 25s ease infinite;
+}
+
+@keyframes gradientShift{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* =========================
+   BACKGROUND SCROLLING BAND
+   (seamless, appears instantly)
+========================= */
+.bg-scroll{
+    position:absolute;
+    top:50%;
+    left:0;
+    transform:translateY(-50%);
+    width:100%;
+    overflow:hidden;
+    z-index:1;
+    pointer-events:none;
+}
+
+.bg-scroll-track{
+    display:flex;
+    width:max-content;
+    animation:bgScroll 220s linear infinite;
+}
+
+.bg-scroll-track span{
+    font-size:30vw;
+    font-weight:900;
+    color:transparent;
+    -webkit-text-stroke:2px rgba(218,165,32,0.15);
+    text-stroke:2px rgba(218,165,32,0.15);
+    white-space:nowrap;
+    padding-right:6vw;
+    line-height:1;
+    text-transform:uppercase;
+}
+
+@keyframes bgScroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+}
+
+/* =========================
+   HEADER
+========================= */
+.header{
+    position:absolute;
+    top:2vh;
+    left:2vw;
+    display:flex;
+    align-items:center;
+    gap:1.5vw;
+    z-index:20;
+    width:96vw;      /* Gives almost the full screen width */
+}
+
+.logo{
+    width:160px;
+    height:115px;
+    object-fit:fill;
+}
+
+.name{
+    font-size:3vw;
+    font-weight:1000;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    line-height:1.2;
+
+    color:#FFFFFF;             /* Text colour */
+
+    -webkit-text-stroke:2px  #5A3315;
+    text-stroke:2px #5A3315;
+
+    text-shadow:
+        0 0 10px #9C6B4A,
+        0 0 20px #F3E5D0,
+        2px 2px 6px #D8B08C;
+}
+
+/* =========================
+   OUTLINE + MAIN THANK YOU
+========================= */
+.center-wrap{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index:10;
+    text-align:center;
+    width:100vw;      /* Full viewport width */
+    overflow:visible;
+}
+.bg-outline{
+    font-size:23vw;
+    font-weight:900;
+    color:transparent;
+
+    -webkit-text-stroke:2px rgba(223,193,168,0.20);
+    text-stroke:2px rgba(223,193,168,0.20);
+
+    text-transform:uppercase;
+    line-height:1;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    white-space:nowrap;
+    z-index:1;
+}
+
+.main-text{
+    position:relative;
+    font-size:13.8vw;
+    font-weight:900;
+    text-transform:uppercase;
+    line-height:1;
+    white-space:nowrap;     /* Prevent wrapping */
+    display:inline-block;   /* Keep text together */
+    z-index:10;
+background:linear-gradient(
+    70deg,
+    #9C6B4A,
+    #D8B08C,
+    #DFC1A8,
+    #D8B08C,
+    #E8C7A2,
+    #F3E5D0,
+    #E8C7A2,
+    #9C6B4A,
+    #D5B79A ,
+    #D8B08C
+);
+
+    background-size:300% 100%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    animation:pulse 4s ease-in-out infinite,
+              hue 12s linear infinite;
+
+    filter:drop-shadow(0 0 25px #6F4428   );
+}
+
+@keyframes pulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.04);}
+}
+
+@keyframes hue{
+    from{background-position:0% 50%;}
+    to{background-position:300% 50%;}
+}
+
+/* =========================
+   MARQUEES (top + bottom)
+========================= */
+.marquee{
+    position:absolute;
+    width:100%;
+    overflow:hidden;
+    z-index:5;
+}
+
+.marquee.top{top:16vh;}
+.marquee.bottom{bottom:10vh;}
+
+.track{
+    display:flex;
+    width:max-content;
+    animation:scroll 90s linear infinite;
+}
+
+.track span{
+    margin-right:8vw;
+    font-size:3vw;
+    color:#DFC1A8;
+    text-transform:uppercase;
+    font-weight:700;
+    letter-spacing:3px;
+    white-space:nowrap;
+}
+
+@keyframes scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+}
+
+/* =========================
+   FLOATING SHAPES
+========================= */
+.shape{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(6px);
+    opacity:.55;
+    z-index:2;
+    mix-blend-mode:screen;
+}
+
+.s1{
+    width:14vw;height:14vw;
+    background:radial-gradient(circle,#DFC1A8,transparent 70%);
+    top:18%;left:15%;
+    animation:float1 14s ease-in-out infinite;
+}
+
+.s2{
+    width:20vw;height:20vw;
+    background:radial-gradient(circle,#daa520,transparent 70%);
+    bottom:15%;right:12%;
+    animation:float2 18s ease-in-out infinite;
+}
+
+.s3{
+    width:11vw;height:11vw;
+    background:radial-gradient(circle,#DFC1A8,transparent 70%);
+    top:28%;right:22%;
+    animation:float3 12s ease-in-out infinite;
+}
+
+.s4{
+    width:16vw;height:16vw;
+    background:radial-gradient(circle,#ffd700,transparent 70%);
+    bottom:22%;left:10%;
+    animation:float2 20s ease-in-out infinite reverse;
+}
+
+@keyframes float1{
+    0%,100%{transform:translateY(0) rotate(0deg);}
+    50%{transform:translateY(-4vh) rotate(180deg);}
+}
+@keyframes float2{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(5vh);}
+}
+@keyframes float3{
+    0%,100%{transform:translateX(0);}
+    50%{transform:translateX(-5vw);}
+}
+
+/* =========================
+   FOOTER
+========================= */
+.footer{
+    position:absolute;
+    bottom:3vh;
+    width:100%;
+    text-align:center;
+    font-size:2.8vw;
+    font-weight:600;
+    letter-spacing:2px;
+    color:linear-gradient(-45deg,#000000,#0a1628,#0d1b2a,#1b263b,#2a3b55,#b8860b,#1b263b,#000000);
+    z-index:20;
+    text-shadow:0 0 15px rgba(218,165,32,0.4);
+}
+
+/* glow */
+.glow{
+    position:absolute;
+    width:60vw;
+    height:60vw;
+    max-width:900px;
+    max-height:900px;
+    background:radial-gradient(circle,
+       #DFC1A8,
+       #C79668,
+       #6F4428,
+        transparent 70%);
+    left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    z-index:0;
+    animation:glowPulse 8s ease-in-out infinite;
+}
+
+@keyframes glowPulse{
+    0%,100%{opacity:.7; transform:translate(-50%,-50%) scale(1);}
+    50%{opacity:1; transform:translate(-50%,-50%) scale(1.15);}
+}
+</style>
+</head>
+<body>
+<!-- Seamless background scrolling THANK YOU (visible immediately) -->
+<div class="bg-scroll">
+    <div class="bg-scroll-track">
+        <span>WELCOMING&nbsp;&nbsp;WELCOMING&nbsp;&nbsp;WELCOMING&nbsp;&nbsp;WELCOMING&nbsp;&nbsp;WELCOMING&nbsp;&nbsp;WELCOMING&nbsp;&nbsp;</span>
+        <span>WELCOMING&nbsp;&nbsp;WELCOMING&nbsp;&nbsp;WELCOMING&nbsp;&nbsp;WELCOMING&nbsp;&nbsp;WELCOMING&nbsp;&nbsp;WELCOMING&nbsp;&nbsp;</span>
+    </div>
+</div>
+
+<!-- Header -->
+<div class="header">
+    <img src="logo.png" class="logo" alt="Church Logo" onerror="this.style.display='none'">
+    <div class="name">
+    WORD OF LIFE MINISTRIES INTERNATIONAL CHURCH
+</div>
+</div>
+
+<!-- Moving Text Top -->
+
+
+      
+    </div>
+</div>
+
+<!-- Center Thank You -->
+<div class="center-wrap">
+    <div class="bg-outline">WELCOMING</div>
+    <div class="main-text">WELCOMING</div>
+</div>
+
+
+<!-- Floating Shapes -->
+<div class="shape s1"></div>
+<div class="shape s2"></div>
+<div class="shape s3"></div>
+<div class="shape s4"></div>
+
+<!-- Moving Text Bottom -->
+<div class="marquee bottom">
+    <div class="track">
+      
+
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  "TO FIND THE LOST,AND KEEP THE FOUND".
+</div>
+
+<script>
+// Soft blur breathing on floating shapes
+const shapes = document.querySelectorAll('.shape');
+setInterval(()=>{
+    shapes.forEach(shape=>{
+        shape.style.filter = `blur(${4 + Math.random()*6}px)`;
+    });
+}, 2500);
+</script>
+
+</body>
+</html>
